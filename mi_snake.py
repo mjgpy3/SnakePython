@@ -18,7 +18,6 @@ def directions_are_opposite(dir_1, dir_2):
 
 if __name__ == '__main__':
     snake = []	        # The snake which is a list of locations occupied
-    add_node = False	# Whether to add a node, used when an object is eaten
     direction = [0, 1]	# A "vector" of [y, x] showing which way the snake is traveling
     points = 0	        # The number of eaten objects
     key = 0 	        # Holds the pressed key 
