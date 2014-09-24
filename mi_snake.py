@@ -9,25 +9,43 @@ def generate_food_location(snake, width, length):
         place = random_place(width, length)
     return place
 
-class Place(object):
+class Pair(object):
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+    def __iter__(self):
+        yield self.left
+        yield self.right
+
+    def __getitem__(self, index):
+        return list(self)[index]
+
+class Place(Pair):
     def __init__(self, w, h):
         self.width = w
         self.height = h
+        Pair.__init__(self, w, h)
 
-    def __iter__(self):
-        yield self.width
-        yield self.height
+class Vector(Pair):
+    def __init__(self, y, x):
+        self.y = y
+        self.x = x
+        Pair.__init__(self, y, x)
+
+    def opposite_of(self, other_vector):
+        return self.x == -other_vector.x and self.y == -other_vector.y
 
 def random_place(width, height):
     return Place(random.randrange(0, width), random.randrange(0, height))
 
 def directions_are_opposite(dir_1, dir_2):
     """ Checks if two passed vectors are opposite in direction """
-    return dir_1[0] == (dir_2[0] * -1) and dir_1[1] == (dir_2[1] * -1)
+    return dir_1[0] == -dir_2[0] and dir_1[1] == -dir_2[1]
 
 if __name__ == '__main__':
     snake = []	        # The snake which is a list of locations occupied
-    direction = [0, 1]	# A "vector" of [y, x] showing which way the snake is traveling
+    direction = list(Vector(0, 1))
     points = 0	        # The number of eaten objects
     key = 0 	        # Holds the pressed key 
     delay = 100
@@ -50,7 +68,7 @@ if __name__ == '__main__':
     # Give the snake it's first node at the middle of the screen
     snake.append([screen_width / 2, screen_length / 2])
 
-    food_location = generate_food_location(snake, screen_width, screen_length)
+    food_location = list(generate_food_location(snake, screen_width, screen_length))
 
     screen.nodelay(True)
 

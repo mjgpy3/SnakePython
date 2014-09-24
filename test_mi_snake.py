@@ -35,5 +35,23 @@ class TestRandomPlace(unittest.TestCase):
         for location in food_locations:
             self.assertFalse(location in snake)
 
+    def test_vectors_that_are_the_same_are_not_opposites(self):
+        vec1, vec2 = mi_snake.Vector(0, 1), mi_snake.Vector(0, 1)
+
+        self.assertFalse(vec1.opposite_of(vec2))
+
+    def test_vectors_that_are_orthogonal_are_not_opposites(self):
+        vec1, vec2 = mi_snake.Vector(1, 1), mi_snake.Vector(0, 1)
+
+        self.assertFalse(vec1.opposite_of(vec2))
+
+    def test_vectors_whose_components_are_the_negation_of_each_other_are_opposite(self):
+        vec1, vec2 = mi_snake.Vector(1, -5), mi_snake.Vector(-1, 5)
+
+        self.assertTrue(vec1.opposite_of(vec2))
+
+    def test_list_of_vector_returns_y_then_x(self):
+        self.assertEqual([42, 35], list(mi_snake.Vector(42, 35)))
+
 if __name__ == '__main__':
     unittest.main()
