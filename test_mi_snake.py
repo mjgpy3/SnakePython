@@ -53,5 +53,8 @@ class TestRandomPlace(unittest.TestCase):
     def test_list_of_vector_returns_y_then_x(self):
         self.assertEqual([42, 35], list(mi_snake.Vector(42, 35)))
 
+    def test_to_pairs_are_the_same_if_their_left_and_right_is_the_same(self):
+        self.assertEqual(mi_snake.Pair(3, 4), mi_snake.Pair(3, 4))
+
 if __name__ == '__main__':
     unittest.main()
