@@ -2,15 +2,24 @@
 
 import curses, random
 
-
 def generate_food_location(snake, width, length):
     """ Loops through slots on the map and finds one where the snake is not """
-    while 1:
-        place = [random.randrange(0, width), random.randrange(0, length)]
-        for snake_location in snake:
-            if snake_location == place:
-                continue
-        return place
+    place = random_place(width, length)
+    while place in snake:
+        place = random_place(width, length)
+    return place
+
+class Place(object):
+    def __init__(self, w, h):
+        self.width = w
+        self.height = h
+
+    def __iter__(self):
+        yield self.width
+        yield self.height
+
+def random_place(width, height):
+    return Place(random.randrange(0, width), random.randrange(0, height))
 
 def directions_are_opposite(dir_1, dir_2):
     """ Checks if two passed vectors are opposite in direction """
